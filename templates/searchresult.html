@@ -1,0 +1,137 @@
+{% extends "layout.html" %} {% block styles %}
+{{super()}}
+<style>
+  html,
+  body,
+  header,
+  .view {
+    height: 100%;
+  }
+
+  body {
+    padding-top: 50px;
+  }
+  input[type="text"]:focus,
+  textarea:focus {
+    border-bottom: 1px #81b9bf !important;
+    box-shadow: 0 1px 0 0 #81b9bf !important;
+  }
+  label{
+    font-size: 8;
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Main navigation -->
+<header>
+  <!-- Full Page Intro -->
+  <div class="view grey lighten-3">
+    <!-- Mask & flexbox options-->
+    <div class="mask">
+      <!-- Content -->
+      <div class="container h-100">
+        <!--Grid row-->
+        <div class="row align-items-center h-100">
+          <!--Grid column-->
+          <div class="col-md-6">
+            <h1 class="mb-4">
+              We couldn't couldn't seem<br /><span style="color: #81b9bf;"
+                >to find anything</span
+              >
+              for <span style="color: #0095a8;"><i>{{query}}.</i></span>
+            </h1>
+            <button
+              type="button"
+              class="btn btn-primary btn-rounded btn-md ml-md-0"
+              style="
+                background-color:  #0095a8!important;
+                border-radius: 30px !important;
+              "
+              onclick="history.back()"
+            >
+              Go back
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-grey btn-rounded btn-md"
+              style="
+                border-color:  #81b9bf !important;
+                color:  #81b9bf !important;
+                border-radius: 30px !important;
+              "
+              data-toggle="collapse"
+              data-target="#collapseExample"
+            >
+              Search again
+            </button>
+            <div class="collapse" id="collapseExample">
+              <form
+                class="form-inline d-flex justify-content-left md-form form-sm mt-0"
+                method="GET"
+                action="/search"
+              >
+                <i id="searchIcon" class="fa fa-search" aria-hidden="true"></i>
+                <input
+                  class="form-control form-control-sm ml-3 w-75"
+                  type="text"
+                  name="query"
+                  aria-label="Search"
+                  required
+                  placeholder="Search"
+                  id="searchBar"
+                />
+                <div id="searchLoad"></div>
+              </form>
+            </div>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-6">
+            <img
+              src="../static/undraw_lost_bqr2.svg"
+              alt=""
+              class="img-fluid"
+            />
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </div>
+      <!-- Content -->
+    </div>
+    <!-- Mask & flexbox options-->
+  </div>
+  <!-- Full Page Intro -->
+</header>
+<!-- Main navigation -->
+<script>
+  $(document).ready(function () {
+    $("#searchBar").keypress(function (e) {
+      var keycode = e.keyCode ? e.keyCode : e.which;
+      if (keycode === 13) {
+        $("#searchIcon").hide()
+        $("#searchBar").hide()
+        $("#searchLoad").html(`
+        <div style="padding-top: 8px">
+      <span class="spinner-grow text-primary" role="status" style="color: #81b9bf!important; padding-right: 5px!important">
+        <span class="sr-only">Loading...</span>
+      </span>
+      <span class="spinner-grow text-primary" role="status" style="color: #81b9bf!important; padding-right: 5px!important">
+        <span class="sr-only">Loading...</span>
+      </span>
+      <span class="spinner-grow text-primary" role="status" style="color: #81b9bf!important; padding-right: 5px!important">
+        <span class="sr-only">Loading...</span>
+      </span>
+      <span class="spinner-grow text-primary" role="status" style="color: #81b9bf!important; padding-right: 5px!important">
+        <span class="sr-only">Loading...</span>
+      </span>
+      <span class="spinner-grow text-primary" role="status" style="color: #81b9bf!important; padding-right: 5px!important">
+        <span class="sr-only">Loading...</span>
+      </span>
+    </div>
+      `);
+      }
+    });
+  });
+</script>
+{% endblock %}

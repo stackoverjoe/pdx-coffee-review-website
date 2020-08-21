@@ -1,0 +1,177 @@
+<div
+  class="animated fadeInLeft contact-form shadow-lg customModal"
+  style="width: 60%; display: inline-block; margin-top: 8vh;"
+  id="reviewBox{{x.id}}"
+>
+  <div class="contact-image">
+    <img src="../static/undraw_coffee_break_j3of.svg" alt="rocket_contact" />
+  </div>
+  <form method="post" action="/submit-review">
+    <h3 id="cartName{{x.id}}" style="color: #81b9bf !important;">
+      Leave a review for {{x.name}}
+    </h3>
+    <div id="formBodyArea{{x.id}}" class="row-md-12">
+      <!-- Basic dropdown -->
+      <div class="form-group">
+        <div style="padding-bottom: 10px; max-width: 50%;">
+          <input
+            id="name"
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="Your name"
+            value=""
+            s
+            required
+          />
+        </div>
+        <input
+          id="cartID"
+          type="hidden"
+          name="cartId"
+          class="form-control"
+          placeholder="Rating"
+          value="{{x.id}}"
+          required
+        />
+        <textarea
+          name="txtMsg"
+          class="form-control"
+          placeholder="Your review"
+          style="width: 100%; height: 150px; margin-bottom: 8px;"
+          required
+        ></textarea>
+        <div id="grabber{{x.id}}"></div>
+        <div id="rating" class="form-group" style="text-align: left;">
+          <span style="color: grey; padding-left: 3px; font-weight: 400;"
+            >Rating:
+          </span>
+          <span>
+            <i
+              id="1rating{{x.id}}"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="2rating{{x.id}}"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="3rating{{x.id}}"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="4rating{{x.id}}"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="5rating{{x.id}}"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+        </div>
+        <input
+          id="ratingInput{{x.id}}"
+          type="hidden"
+          name="rating"
+          class="form-control"
+          placeholder="Rating"
+          value=""
+          required
+        />
+        <div>
+          <input
+            id="submit{{x.id}}"
+            type="submit"
+            name="btnSubmit"
+            class="btnContact"
+            style="background-color: #81b9bf !important;"
+            value="Submit"
+          /><span>
+            <button
+              id="close{{x.id}}"
+              class="btn btn-sm btn-outline-primary"
+              type="button"
+              style="
+                border-radius: 30px !important;
+                margin-left: 0px !important;
+                font-weight: 500 !important;
+                color: #81b9bf !important;
+                border-color: #81b9bf !important;
+              "
+            >
+              Close
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  $(document).ready(function () {
+    //Will actually need to pull submit into it's own function to ensure its ok to remove listeners
+    $("#close{{x.id}}").click(function (e) {
+      //$('#reviewBox{{x.id}}').removeClass('collapse')
+      $(`#reviewBox{{x.id}}`).addClass("fadeOutRight");
+      target = this.id.substring(5);
+      setTimeout(function () {
+        $(".modal").modal("hide");
+        $(`#reviewBox{{x.id}}`).removeClass("fadeOutRight");
+      }, 600);
+      for (i = 1; i <= 5; ++i) {
+        $(`#${i}rating${target}`).unbind("mouseout click mouseover");
+      }
+    });
+
+    /*
+    $("#submit{{x.id}}").click(function () {
+      var name = $("#name").val();
+      var review = $("#txtMessage").val();
+      var rating = $("#ratingInput{{x.id}}").val()
+      if (name.length >= 1 && review.length >= 1) {
+        var name = $(`#cartName{{x.id}}`).text().substr(19);
+        $(`#cartName{{x.id}}`).text(`Thanks for reviewing ${name}!`);
+        $("#formBodyArea{{x.id}}")
+          .html(`<img width=50% class="animated flipInY"src="static/undraw_super_thank_you_obwk.svg"/><br>
+      <button
+              id="close{{x.id}}"
+              class="btn btn-md btn-outline-primary"
+              type="button"
+              style="
+                margin-top:2em!important;
+                border-radius: 30px !important;
+                margin-left: 0px !important;
+                font-weight: 500 !important;
+                color: #2C9984 !important;
+                border-color: #2C9984 !important;
+              "
+            >
+              Close
+            </button>
+      `);
+        $("#close{{x.id}}").click(function (e) {
+          //$('#reviewBox{{x.id}}').removeClass('collapse')
+          $(`#reviewBox{{x.id}}`).addClass("fadeOutRight");
+          target = this.id.substring(5);
+          setTimeout(function () {
+            $(".modal").modal("hide");
+            $(`#reviewBox{{x.id}}`).removeClass("fadeOutRight");
+          }, 600);
+        });
+      }
+    });*/
+  });
+</script>

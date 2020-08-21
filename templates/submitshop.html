@@ -1,0 +1,354 @@
+{% extends "layout.html" %} {% block styles %} {{super()}}
+<style>
+  body {
+    background: -webkit-linear-gradient(left, #4e342e, #7b5e57);
+  }
+  .contact-form {
+    background: #f6faf9;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    width: 70%;
+    border-radius: 5px;
+  }
+  .contact-form .form-control {
+    border-radius: 1rem;
+  }
+  .contact-image {
+    text-align: center;
+  }
+  .contact-image img {
+    border-radius: 6rem;
+    width: 11%;
+    margin-top: -3%;
+  }
+  .contact-form form {
+    padding: 14%;
+  }
+  .contact-form form .row {
+    margin-bottom: -7%;
+  }
+  .contact-form h3 {
+    margin-bottom: 8%;
+    margin-top: -10%;
+    text-align: center;
+    color: #0062cc;
+  }
+  .contact-form .btnContact {
+    width: 50%;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5%;
+    background: #81b9bf;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+  }
+  .btnContactSubmit {
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    color: #fff;
+    background-color: #0062cc;
+    border: none;
+    cursor: pointer;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    box-shadow: 0 0 5px #81b9bf !important;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid #81b9bf !important;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mozScroll {
+    scrollbar-width: none;
+  }
+</style>
+{% endblock %} {% block content %}
+<div
+  class="container contact-form shadow-lg"
+  style="margin-top: 13vh !important;"
+>
+  <div class="contact-image">
+    <img src="../static/undraw_coffee_break_j3of.svg" alt="rocket_contact" />
+  </div>
+  <form method="post" action="/submit-shop">
+    <h3 style="color: #81b9bf !important;">Submit a new coffee shop</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Basic dropdown -->
+
+        <!-- Basic dropdown -->
+        <div class="form-group">
+          <input
+            id="cartName"
+            type="text"
+            name="cartName"
+            class="form-control"
+            placeholder="Name of the coffee shop"
+            value=""
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="cartPhoneNumber"
+            type="text"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            name="cartPhone"
+            class="form-control"
+            placeholder="Phone Number (e.g. 123-456-7890)"
+            value=""
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="cartAddress"
+            type="text"
+            name="cartStreet"
+            class="form-control"
+            placeholder="Street"
+            value=""
+            required
+          />
+        </div>
+        <hr />
+        <div class="form-group">
+          <input
+            id="cartAddress"
+            type="text"
+            name="userName"
+            class="form-control"
+            placeholder="Your name"
+            value=""
+            pattern="[A-Za-z |  *]*"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <textarea
+            name="userReview"
+            class="form-control"
+            placeholder="Your review"
+            style="width: 100%; height: 150px;"
+            required
+          ></textarea>
+        </div>
+        <div id="rating" class="form-group">
+          <span style="color: grey; padding-left: 3px; font-weight: 400;"
+            >Rating:
+          </span>
+          <span>
+            <i
+              id="1"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="2"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="3"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="4"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <span>
+            <i
+              id="5"
+              class="icon-home fa fa-star fa-lg"
+              style="padding-bottom: 8px; padding-right: 2px;"
+            ></i
+          ></span>
+          <input
+            id="ratingInput"
+            type="hidden"
+            name="userRating"
+            class="form-control"
+            placeholder="Rating"
+            value="5"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="submitBtn"
+            type="submit"
+            name="btnSubmit"
+            class="btnContact"
+            style="background-color: #81b9bf !important;"
+            value="Submit"
+            required
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <input
+            id="cartAddress"
+            type="text"
+            name="cartCity"
+            class="form-control"
+            placeholder="City"
+            value=""
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="cartAddress"
+            type="text"
+            name="cartState"
+            class="form-control"
+            placeholder="State"
+            value=""
+            required
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="cartAddress"
+            type="text"
+            name="cartZip"
+            class="form-control"
+            placeholder="Zip code"
+            pattern="[0-9]*"
+            value=""
+            required
+          />
+        </div>
+        <hr />
+        <label
+          id="fileLabel"
+          for="fileUpload"
+          class="file-upload btn btn-md btn-primary btn-block rounded-pill shadow"
+          style="background-color: #81b9bf !important;"
+          ><i class="fa fa-upload mr-2"></i
+          ><span id="photoText">Upload an image</span>
+          <input
+            id="fileUpload"
+            type="file"
+            style="display: none;"
+            accept=".jpg,.jpeg,.png"
+          />
+          <input
+            id="sendPic"
+            name="cartPic"
+            style="display: none;"
+            value="None"
+          />
+        </label>
+        <div style="text-align: center;">
+          <img
+            id="preview"
+            src="../static/undraw_camera_mg5h.svg"
+            style="padding-top: 15px; max-width: 80%; border-radius: 5px;"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  $(document).ready(function () {
+
+    //listener detects if user has selected a file and converts it to base 64 and stages it for transfer to database
+    $("#fileUpload").change(function (e) {
+      e.preventDefault();
+      var thing;
+      var file = this.files[0];
+      $("#photoText").text(file.name)
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        var arrayBuffer = fileReader.result;
+        $("#sendPic").val(arrayBuffer);
+        $("#preview").attr("src", arrayBuffer).load();
+      };
+    });
+    timeout = null;
+
+    //function for rating via the stars using css style toggle
+    $("#1,#2,#3,#4,#5")
+      .mouseover(function () {
+        clearTimeout(timeout);
+        var number = parseInt(this.id);
+        for (i = 1; i <= number; ++i) {
+          $(`#${i}`).css("color", "gold");
+        }
+      })
+      .mouseout(function () {
+        timeout = setTimeout(function () {
+          for (i = 1; i <= 5; ++i) {
+            $(`#${i}`).css("color", "black");
+          }
+        }, 30);
+      });
+
+    //function for if a star is clicked
+    $("#1,#2,#3,#4,#5").click(function () {
+      clearTimeout(timeout);
+      for (i = 1; i <= 5; ++i) {
+        $(`#${i}`).css("color", "black");
+      }
+      var number = parseInt(this.id);
+      for (i = 1; i <= number; ++i) {
+        $(`#${i}`).css("color", "gold");
+        $("#ratingInput").val(number);
+        $(this).unbind("mouseout");
+      }
+    });
+
+    //This listener listens for all events that start with finderId
+    //if clicked it auto fills the page for the user
+    $("[id^=finderId]").click(function () {
+      extraDetails = JSON.parse(this.nextElementSibling.innerText);
+      $(`#cartName`).val(this.innerText);
+      $(`#cartPhoneNumber`).val(extraDetails.phone);
+      $(`#cartAddress`).val(
+        `${extraDetails.street}, ${extraDetails.city}, ${extraDetails.state}`
+      );
+    });
+
+    //This event listener listens for input in the search bar and filters
+    //out anything that does not include the users search request by altering
+    //the css property "display"
+    $("#searchBar").keyup(function (e) {
+      e.preventDefault();
+      var value = $("#searchBar").val();
+      var list = $("#cartChooser").children();
+      for (i = 1; i < list.length; ++i) {
+        if (
+          list[i].innerText.toUpperCase().indexOf(value.toUpperCase()) > -1 &&
+          list[i].id.indexOf("extraDetails") <= -1
+        ) {
+          list[i].style.display = "";
+        } else {
+          list[i].style.display = "none";
+        }
+      }
+    });
+
+
+  });
+</script>
+{% endblock %}

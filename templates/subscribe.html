@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+{% block head %}
+{{super()}}
+{% endblock %}
+{% block content %}
+    <!-- Section -->
+    <div class="winter-neva-gradient" style="height:auto!important; padding-bottom: 35vh; padding-top: 15vh">
+      <style>
+        .input-grey .form-control {
+          border-radius: .125rem;
+        }
+        .form-control:focus {
+          background-color: rgba(255,255,255,.3);
+        }
+  
+        .input-grey input::placeholder {
+          color: #fff;
+        }
+        input, select, textarea{
+          color: #3c3a52!important;
+      }
+      </style>
+  
+        <div class="container">
+  
+          <!-- Grid row -->
+          <div class="row align-items-center">
+  
+            <!-- Grid column -->
+            <div class="col-lg-6">
+              {% if subscribed == False %}
+              <h3 class="font-weight-bold white-text pb-2">Stay Updated</h3>
+              <p class="lead white-text pt-2 mb-5">Subscribe to get email updates when new coffee shops are added!</p>
+  
+              <form class="col-md-9 input-grey pl-0" method="POST" action="/submitsubscribe">
+                <div class="input-group mb-3">
+                  <input type="email" name="email" required class="form-control rgba-white-light border-0 z-depth-0" placeholder="Enter Email Address" aria-label="Enter Email Address"
+                    aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-md btn-mdb-color m-0 px-3 py-2 z-depth-0" type="submit" id="sub">Sign up<i class="fa fa-arrow-right pl-2"></i></button>
+                  </div>
+                </div>
+              </form>
+              {% else %}
+              <h3 class="font-weight-bold white-text pb-2">Thanks for subscribing!</h3>
+              <a href="/allshops">
+              <button
+              type="button"
+              class="btn btn-primary btn-rounded btn-md ml-md-0"
+              style="
+                background-color:  #3c3a52!important;
+                border-radius: 30px !important;
+              "
+            >
+              Read Reviews
+            </button>
+          </a>
+          <a href="/">
+            <button
+              type="button"
+              class="btn btn-outline-grey btn-rounded btn-md"
+              style="
+                border-color:  #3c3a52 !important;
+                color:  #3c3a52 !important;
+                border-radius: 30px !important;
+              "
+              data-toggle="collapse"
+              data-target="#collapseExample"
+            >
+              Home
+            </button>
+          </a>
+              {% endif %}
+            </div>
+            <!-- Grid column -->
+  
+            <!-- Grid column -->
+            <div class="col-lg-6 wow fadeInUpBig" data-wow-delay=".2s">
+  
+                <img src="../static/undraw_lost_online_wqob.svg" alt="Sample image" width="100%" >
+  
+            </div>
+            <!-- Grid column -->
+  
+          </div>
+          <!-- Grid row -->
+  
+        </div>
+  
+      </div>
+      <script>
+      </script>
+    <!-- Section -->
+  {% endblock %}

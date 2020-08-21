@@ -1,0 +1,328 @@
+{% for x in businesses %}
+<style>
+  .contact-form {
+    background: #f6faf9;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    width: 70%;
+    border-radius: 5px;
+  }
+  .contact-form .form-control {
+    border-radius: 1rem;
+  }
+  .contact-image {
+    text-align: center;
+  }
+  .contact-image img {
+    border-radius: 6rem;
+    width: 11%;
+    margin-top: -3%;
+  }
+  .contact-form form {
+    padding: 14%;
+  }
+  .contact-form form .row {
+    margin-bottom: -7%;
+  }
+  .contact-form h3 {
+    margin-bottom: 8%;
+    margin-top: -10%;
+    text-align: center;
+    color: #0062cc;
+  }
+  .contact-form .btnContact {
+    width: 50%;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5%;
+    background: #dc3545;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+  }
+  .btnContactSubmit {
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    color: #fff;
+    background-color: #0062cc;
+    border: none;
+    cursor: pointer;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    box-shadow: 0 0 5px #81b9bf  !important;
+    padding: 3px 0px 3px 3px;
+    margin: 5px 1px 3px 0px;
+    border: 1px solid #81b9bf  !important;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mozScroll {
+    scrollbar-width: none;
+  }
+
+  .customModal {
+  top: 50%;
+  left: 50%;
+}
+a:hover{
+  text-decoration: underline
+}
+
+</style>
+
+<div
+  class="review-block container my-5 pt-2 z-depth-2"
+  style="
+    background-color: #deebe9;
+    border-radius: 4px;
+    width: 80vw;
+    padding-bottom: 1px !important;
+  "
+  id="reviewContainer{{x.id}}"
+  data-value="{{x.name}}"
+>
+<div class="col-md-12" style="padding-left:0px!important">
+<div
+        class="review-block-title"
+        style="font-size:2em; font-weight: 800; padding-bottom: 3px; width:100%!important"
+      >
+        {{x.name}}
+      </div>
+</div>
+  <div class="row" style="padding-top: 5px; padding-bottom: 0.5em;">
+    <div class="col-sm-3">
+    
+      {%if x.image_url != "None" %}
+      <img
+        src="{{x.image_url}}"
+        class="img-rounded"
+        width="100%"
+        style="
+          max-height: 250px;
+          border-radius: 4px;
+          box-shadow: 1px 1px 5px grey;
+        "
+      />
+      {% else %}
+      <img
+      src="static/undraw_Chef_cu0r.png"
+      class="img-rounded"
+      width="100%"
+      style="
+        max-height: 250px;
+        border-radius: 4px;
+        box-shadow: 1px 1px 5px grey;
+      "
+    />
+      {% endif %}
+      <div style="padding-top:1em;" class="review-block-rate">
+        {% for x in range(x.rating|int)%}
+        <i
+          class="icon-home fa fa-star fa-lg"
+          style="
+            color: gold;
+            padding-bottom: 8px;
+            text-shadow: 1px 1px 5px grey;
+          "
+        ></i>
+        <!-- <span class="glyphicon glyphicon-star" aria-hidden="true"></span> -->
+        {% endfor %}
+        <div style="padding-bottom: 3px;">
+          {{x.review_count}} reviews.
+        </div>
+      </div>
+      <div class="review-block-name" style="padding-top: 5px !important;">
+        <a href="{{x.url}}" target="blank">Read full reviews on Yelp.</a>
+      </div>
+      <div class="review-block-date" style="font-size: 14px;">
+        <a
+          href="https://www.google.com/maps/place/{{x.street}}+{{x.city}}+{{x.state}}+{{x.zip_code}}"
+          target="blank"
+          style="color: inherit;"
+          >{{x.city}}, {{x.state}}<br />{{x.street}}<br />{{x.zip_code}}</a
+        >
+      </div>
+    </div>
+    <div class="col-sm-9">
+   
+       <div style="font-weight: 800; font-size:1.1em; padding-bottom: .5em">Customer Reviews</div>
+      {% if x.reviews|length <=3%}
+      {% for r in x.reviews %}
+      
+      <div class="review-block-description" style="font-weight: 500;">
+       {% for x in range(r.rating|int)%}
+        <i
+          class="icon-home fa fa-star fa-xs"
+          style="
+            color: gold;
+            padding-bottom: 8px;
+            text-shadow: 1px 1px 5px grey;
+            height:5px!important
+          "
+        ></i>
+        {% endfor %}
+        <span style="font-size: 12px; color: #666666">{{r.time_created}}</span>
+        <br>
+        <span style="font-weight: 600!important">{{r.user.name}}</span>: <a style="color: inherit" target="blank" href="{{r.url}}">{{r.text}}</a>{% if r != x.reviews[-1] %}
+        <hr />
+        {%endif%}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {%if x.reviews|length > 3 %}
+      {% for r in x.reviews %}
+      {% if loop.index0 < 3 %}
+      <div class="review-block-description" style="font-weight: 500;">
+         {% for x in range(x.rating|int)%}
+        <i
+          class="icon-home fa fa-star fa-xs"
+          style="
+            color: gold;
+            padding-bottom: 8px;
+            text-shadow: 1px 1px 5px grey;
+          "
+        ></i>
+        <!-- <span class="glyphicon glyphicon-star" aria-hidden="true"></span> -->
+        {% endfor %}
+        <span style="font-size: 12px; color: #666666">{{r.time_created}}</span>
+        <br>
+        <span style="font-weight: 600!important;">{{r.user.name}}: </span><a style="color: inherit" target="blank" href="{{r.url}}">{{r.text}}</a>{% if r != x.reviews[-1] %}
+        <hr />
+        {%endif%}
+      </div>
+      {% endif %}
+      {% endfor %}
+      <div>
+          <button
+            id="buttonNo{{x.id}}"
+            class="btn btn-sm btn-outline-info"
+            data-toggle="collapse"
+            data-target="#moreComments{{x.id}}"
+            aria-expanded="false"
+            aria-controls="moreComments"
+            style="
+              border-width: 0px !important;
+              font-weight: 400;
+              color: grey!important;
+              box-shadow: 0 0 0!important;
+              padding-left: 0px!important;
+              margin-left: 0px!important;
+              padding-bottom: 0px!important;
+              margin-top: 0px!important;
+            "
+          >
+            load more reviews
+          </button>
+          <div id="moreComments{{x.id}}" class="collapse animated flipInX">
+            {% for r in x.reviews %}
+            {% if loop.index0 >= 3 %}
+           {% for x in range(x.rating|int)%}
+        <i
+          class="icon-home fa fa-star fa-xs"
+          style="
+            color: gold;
+            padding-bottom: 8px;
+            text-shadow: 1px 1px 5px grey;
+          "
+        ></i>
+        <!-- <span class="glyphicon glyphicon-star" aria-hidden="true"></span> -->
+        {% endfor %}
+        <span style="font-size: 12px; color: #666666">{{r.time_created}}</span>
+        <br> 
+            <div class="review-block-description" style="font-weight: 500;">
+              <span style="font-weight: 600!important;">{{r.name}}: </span>{{r.text}}{% if r != x.reviews[-1] %}
+              <hr />
+              {%endif%}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+      </div>
+      {%endif%}
+
+    </div>
+    <div>
+        <button
+          id="buttonNo{{x.id}}"
+          class="btn btn-md btn-info"
+          type="button"
+          data-toggle="modal"
+          data-target="#collapseReview{{x.id}}"
+          data-dismiss="modal"
+          aria-expanded="false"
+          aria-controls="collapseReview"
+          style="
+            background-color: #81b9bf !important;
+            font-weight: 800;
+            border-radius: 300px !important;
+          "
+        >
+          Leave a review
+        </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="collapseReview{{x.id}}" style="text-align: center;">
+  {%include "reviewPopUp.html" %}
+</div>
+{% endfor %}
+
+<script>
+  $(document).ready(function () {
+    //this listener if to handle the vent that any of the leave a review buttons are pressed. If they are then the unique id is grabbed from
+    //the id of the pressing object 'this' and used to add event handlers for the rating. The adding of event handlers this way it to avoid
+    //list.length * 5 amount of event listeners on the allshops page. When close or submit is pressed, the event handlers are unboud
+    //in the reviewpop.html page to conserve memory.
+    check = $("#thanks").text()
+    if(check === "True"){
+      alert("OK")
+      $("#thanks").text("None")
+    }
+    $("[id^=buttonNo]").click(function () {
+      target = this.id.substring(8);
+      timeout = null;
+      $(
+        `#1rating${target},#2rating${target}, #3rating${target}, #4rating${target}, #5rating${target}`
+      )
+        .mouseover(function () {
+          clearTimeout(timeout);
+          console.log(this);
+          var number = parseInt(this.id[0]);
+          for (i = 1; i <= number; ++i) {
+            $(`#${i}rating${target}`).css("color", "gold");
+          }
+        })
+        .mouseout(function () {
+          timeout = setTimeout(function () {
+            for (i = 1; i <= 5; ++i) {
+              $(`#${i}rating${target}`).css("color", "black");
+            }
+          }, 25);
+        });
+
+      //function for if a star is clicked
+      $(
+        `#1rating${target},#2rating${target}, #3rating${target}, #4rating${target}, #5rating${target}`
+      ).click(function () {
+        clearTimeout(timeout);
+        var number = parseInt(this.id[0]);
+        $(`#ratingInput${target}`).val(number);
+        for (i = 1; i <= 5; ++i) {
+          $(`#${i}rating${target}`).css("color", "black");
+        }
+        for (i = 1; i <= number; ++i) {
+          $(`#${i}rating${target}`).css("color", "gold");
+          $(this).unbind("mouseout");
+        }
+      });
+    });
+  });
+</script>

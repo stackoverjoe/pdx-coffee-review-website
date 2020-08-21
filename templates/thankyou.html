@@ -1,0 +1,105 @@
+{% extends "layout.html" %} {% block styles %}
+{{super()}}
+<style>
+  html,
+  body,
+  header,
+  .view {
+    height: 100%;
+  }
+
+  body {
+    padding-top: 50px;
+  }
+  input[type="text"]:focus,
+  textarea:focus {
+    border-bottom: 1px #81b9bf !important;
+    box-shadow: 0 1px 0 0 #81b9bf !important;
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Main navigation -->
+<header>
+  <!-- Full Page Intro -->
+  <div class="view grey lighten-3">
+    <!-- Mask & flexbox options-->
+    <div class="mask">
+      <!-- Content -->
+      <div class="container h-100">
+        <!--Grid row-->
+        <div class="row align-items-center h-100">
+          <!--Grid column-->
+          <div class="col-md-6">
+            <h1 class="mb-4">
+              Thanks for submitting<br /><span style="color: #81b9bf;"
+                >{{name}}</span
+              >
+              to our site!
+            </h1>
+            <a href="/">
+            <button
+              type="button"
+              class="btn btn-primary btn-rounded btn-md ml-md-0"
+              style="
+                background-color: #81b9bf!important;
+                border-radius: 30px !important;
+              "
+            >
+              Home
+            </button>
+        </a>
+        <a href="/allshops#reviewContainer{{cartId}}">
+            <button
+              type="button"
+              class="btn btn-outline-grey btn-rounded btn-md"
+              style="
+                border-color: #81b9bf !important;
+                color: #81b9bf !important;
+                border-radius: 30px !important;
+              "
+            >
+              Jump to {{name}}
+            </button>
+            </a>
+            <div class="collapse" id="collapseExample">
+              <form
+                class="form-inline d-flex justify-content-left md-form form-sm mt-0"
+                method="GET"
+                action="/search"
+              >
+                <i id="searchIcon" class="fa fa-search" aria-hidden="true"></i>
+                <input
+                  class="form-control form-control-sm ml-3 w-75"
+                  type="text"
+                  name="query"
+                  placeholder="Search"
+                  aria-label="Search"
+                  required
+                  id="searchBar"
+                />
+                <div id="searchLoad"></div>
+              </form>
+            </div>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-6">
+            <img
+              src="../static/undraw_celebration_0jvk.svg"
+              alt=""
+              class="img-fluid"
+            />
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </div>
+      <!-- Content -->
+    </div>
+    <!-- Mask & flexbox options-->
+  </div>
+  <!-- Full Page Intro -->
+</header>
+<!-- Main navigation -->
+{% endblock %}

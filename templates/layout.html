@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  {% block head %}
+  <head>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link href="static/photos/" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/gh/loadingio/ldbutton@v1.0.1/dist/ldbtn.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="../static/css/mdb.min.css" />
+  </head>
+  {% endblock %} {% block styles %}
+  <style>
+    input[type="search"]:focus,
+    textarea:focus {
+      box-shadow: 0 0 5px #81b9bf !important;
+      padding: 3px 0px 3px 3px;
+      margin: 5px 1px 3px 0px;
+      border: 1px solid #81b9bf !important;
+      color: grey;
+    }
+    .custom {
+      color: black !important;
+    }
+  </style>
+  {% endblock %}
+  <nav
+    class="navbar navbar-dark fixed-top bg-dark shadow-lg"
+    style="background-color: #7b5e57!important;"
+  >
+    <!-- Navbar content -->
+    <a class="navbar-brand" href="/" style="font-weight: 800;"
+      >Portland Roast</a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/"
+            >Home <span class="sr-only">(current)</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/allshops">All Reviews</a>
+        </li>
+        <li class="nav-item dropdown"></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reviewwriter">Submit a new coffee shop!</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Subscribe to email updates
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/subscribe">Sign Up!</a>
+            <!-- <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a> -->
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+        <input
+          id="searchInput"
+          class="form-control mr-sm-2 custom"
+          type="search"
+          placeholder="Enter your favorite cart..."
+          aria-label="Search"
+          name="query"
+          required="required"
+        />
+        <button
+          id="mybtn"
+          class="btn btn-outline-success my-2 btn-sm waves-effect"
+          type="submit"
+          style="
+            border-color: #81b9bf !important;
+            background-color: #81b9bf !important;
+            border-width: 0px !important;
+            color: white !important;
+            font-weight: 800 !important;
+          "
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
+  {% block content %} {% endblock %}
+  <script>
+    window.onload = function () {
+      flag = false;
+      var search = document.getElementById("searchInput");
+
+      var btn = document.getElementById("mybtn");
+
+      //this listener detects if the user has anvigated to a page via the back/forward buttons
+      //it forces a page reload if so to maintain sensable state.
+      window.addEventListener("pageshow", function (event) {
+        var historyTraversal =
+          event.persisted ||
+          (typeof window.performance != "undefined" &&
+            window.performance.navigation.type === 2);
+        if (historyTraversal) {
+          // Handle page restore.
+          window.location.reload();
+        }
+      });
+
+      //this converts teh search button to a loading icon when pressed
+      btn.addEventListener("click", function () {
+        if (search.value.length !== 0 && !flag) {
+          btn.style =
+            "border-width: 0px!important; background-color: #7b5e57!important";
+          btn.className = "";
+          btn.innerHTML = `<div class="spinner-border text-success" style="color:#81b9bf!important" role="status" style="left-padding: 5px; right-padding:5px; border-width:0px!important">
+            <span class="sr-only">Loading...</span>
+          </div>`;
+        }
+      });
+    };
+  </script>
+</html>

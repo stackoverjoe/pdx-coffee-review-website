@@ -1,0 +1,236 @@
+{% extends "layout.html" %}
+<title>Portland Roast</title>
+{% block head %}
+{{super()}}
+{% for x in businesses %}
+<link rel="preload" href={{x.url}} as="document">
+{% endfor %}
+{% endblock %}
+{% block styles %}
+{{super()}}
+<style>
+  body {
+    background-color: #4e342e !important;
+  }
+  .navbar1 {
+    z-index: 2;
+  }
+  #wrap {
+    width: 600px;
+    height: 390px;
+    padding: 0;
+    overflow: hidden;
+  }
+  #frame {
+    width: 800px;
+    height: 520px;
+    border: 1px solid black;
+  }
+  #frame {
+    zoom: 0.75;
+    -moz-transform: scale(0.75);
+    -moz-transform-origin: 0 0;
+  }
+</style>
+{% endblock %} {% block content %}
+<body>
+  <div class="container my-5 py-5" style="border-bottom: none !important;">
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center dark-grey-text">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-md-6 mb-4 mb-md-0">
+          <h3 class="font-weight-bold" style="color: #f9fbfb !important;">
+            A place to browse Portland's coffee shops.
+          </h3>
+
+          <p class="text-muted" style="color: #f9fbfb !important;">
+            Search, explore, and read reviews from your favorite coffee shops.
+          </p>
+
+          <a href="/allshops">
+            <button
+              class="btn btn-info"
+              style="background-color: #81b9bf !important; font-weight: 800;"
+            >
+              Start reading reviews
+            </button>
+          </a>
+          <hr class="my-5" />
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+
+        <div class="col-md-5 mb-4 mb-md-0">
+          <img
+            src="../static/undraw_coffee_break_j3of.svg"
+            class="animated fadeInRight img-fluid"
+            alt=""
+          />
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!--Section: Content-->
+  </div>
+  <div class="container my-5 py-5">
+    <!--Section: Content-->
+    <section class="dark-grey-text text-center">
+      <h3
+        class="font-weight-bold pt-5 pb-2"
+        style="color: #f9fbfb !important; padding-bottom: 3em !important;"
+      >
+        Portland's best
+      </h3>
+
+      <div class="animated slideInLeft">
+        <div class="row mx-3">
+          <div class="col-md-4 px-4 mb-4">
+            <div class="view">
+              <img
+                src="../static/undraw_hot_beverage_2vw3.svg"
+                class="img-fluid"
+                alt="smaple image"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 px-4 mb-4">
+            <div class="view">
+              <img
+                src="../static/undraw_working_remotely_jh40.svg"
+                class="img-fluid"
+                alt="smaple image"
+              />
+            </div>
+          </div>
+          <div class="col-md-4 px-4 mb-4">
+            <div class="view">
+              <img
+                src="../static/undraw_Hello_qnas.svg"
+                class="img-fluid"
+                alt="smaple image"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div
+    class="text-center"
+    style="margin-bottom: 10vh; color: #81b9bf !important;"
+  >
+    <button
+      type="button"
+      class="btn btn-info"
+      data-toggle="modal"
+      data-target="#modalRegular"
+      style="background-color: #81b9bf !important; font-weight: 800;"
+    >
+      Browse local coffee shops on the map
+    </button>
+  </div>
+
+  <!--Modal: Name-->
+  <div
+    class="modal fade"
+    id="modalRegular"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body mb-0 p-0">
+          <div
+            id="map-container-google-16"
+            class="z-depth-1-half map-container-9"
+            style="height: 400px;"
+          >
+            <div
+              id="map"
+              style="position: absolute !important; width: 100%; height: 100%;"
+            ></div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button
+            type="button"
+            class="btn btn-info btn-md"
+            style="background-color: #81b9bf !important;"
+          >
+            Save location <i class="fas fa-map-marker-alt ml-1"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-info btn-md"
+            data-dismiss="modal"
+            style="border-color: #81b9bf !important; color: #81b9bf !important;"
+          >
+            Close <i class="fa fa-times ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="coords" style="display: none;">
+    [{% for x in businesses %}["{{x.name}}", {{x.latitude}}, {{x.longitude}},
+    "{{x.url}}"]{% if x != businesses[-1] %},{%endif%}{% endfor %}]
+  </div>
+  <input id="backbuttonstate" type="text" value="0" style="display: none;" />
+
+  <script>
+   
+      function initMap() {
+        // The location of Portland
+        var portland = { lat: 45.514401, lng: -122.670041 };
+
+        //coords are stored in a hidden div element and populated by the jinja2 template.
+        //Parsed as json here.
+        labels = document.getElementById("coords").innerText;
+        locations = JSON.parse(labels);
+
+        var map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 11,
+          center: portland,
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        //add a marjer for each foodcadt. locations stored on the dom in hidden div node
+        for (i = 0; i < locations.length; i++) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            map: map,
+            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+          });
+
+          //Add an ifram with a link to yelp for each cart. Very slow may rework into custom html.
+          google.maps.event.addListener(
+            marker,
+            "click",
+            (function (marker, i) {
+              return function () {
+                infowindow.setContent(
+                  `<div id="wrap"><iframe src=${locations[i][3]} id="frame" style="position: relative"></iframe></div>`
+                );
+                infowindow.open(map, marker);
+              };
+            })(marker, i)
+          );
+        }
+      }
+  </script>
+  <script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtfxiToGiuDo3zqHl58wbr19abdhQTQQM&callback=initMap"
+  ></script>
+</body>
+{% endblock %}

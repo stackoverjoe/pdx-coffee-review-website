@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block styles %}
+
+<style>
+  body {
+    background-color: #4e342e;
+    padding-top: 70px;
+  }
+  .navbar1 {
+    z-index: 2;
+  }
+  input[type="search"]:focus,
+  textarea:focus {
+    border-bottom: 1px #81b9bf !important;
+    box-shadow: 0 1px 0 0 #81b9bf!important;
+    border-top: 0px!important;
+    border-width: 0px!important;
+  }
+  .customSearch::placeholder{
+    color:white!important;
+    opacity: 1!important;
+  }
+  .preventColorChange:not(:placeholder-shown):not(:focus) { 
+    color:white!important 
+  }
+</style>
+{% endblock %}
+<body>
+  {% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-7">
+        <div id="reviewArea" style="color: white; font-size: 50px; font-weight: 700">
+          {% if searched == False %}All reviews.{%else%}Results for {{query}}.{% endif %}
+        </div>
+        <form
+          id="searchForm22"
+          class="form-inline d-flex justify-content-left md-form form-sm mt-0"
+        >
+        <span style="color:white">
+          <i id="searchIcon" class="fa fa-search" aria-hidden="true"></i>
+          </span>
+          <input
+            class="form-control form-control-sm ml-3 w-75 customSearch preventColorChange"
+            type="search"
+            name="query"
+            placeholder="Search"
+            aria-label="Search"
+            id="searchBar2"
+            style="color:white!important"
+          />
+        </form>
+        <hr />
+        <div id="allReviews">
+        {% with businesses=businesses %} {% include "reviews.html" %} {% endwith
+        %}
+        </div>
+      </div>
+    </div>
+    <div id="thanks" style="display: none;">
+      {{submit}}
+    </div>
+  </div>
+  <script>
+    $(document).ready(function(){
+      //implements the quick search on the all carts page, goes through a list of the html nodes and searches
+      //the custom attribute 'data-value' which contains the food cart name. If the search is not a substring it
+      //is hidden 
+      check = $("#thanks").text()
+      if(check === "True"){
+        alert("OK")
+        $("#thanks").text("None")
+      }
+      $("#searchBar2").keyup(function (e) {
+        e.preventDefault();
+        var value = $("#searchBar2").val();
+        var list = $("#allReviews").children("[id^=reviewContainer]");
+        console.log(list)
+        for (i = 0; i < list.length; ++i) {
+          if (list[i].dataset.value !== undefined && list[i].dataset['value'].toUpperCase().indexOf(value.toUpperCase()) > -1 && list[i].id.indexOf("extraDetails") <= -1){
+            $(`#${list[i].id}`).show()
+          } else {
+            $(`#${list[i].id}`).hide()
+          }
+        }
+      });
+    })
+  </script>
+  {%endblock%}
+</body>
+ 
